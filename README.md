@@ -24,6 +24,7 @@ docker run -d -p 8000:8000 myapp
     source venv/Scripts/activate
 
 3. Установите необходимые зависимости из файла `requirements.txt`:
+
     cd api
    
     pip install -r requirements.txt
@@ -35,9 +36,10 @@ docker run -d -p 8000:8000 myapp
     DB_PORT=*
     DB_PASSWORD=*
     DB_NAME=*
+   
     python sql.py
 
-6. Запустить проект.
+7. Запустить проект.
     uvicorn main:app --reload
 
 ### Получить Топ 100 Репозиториев
