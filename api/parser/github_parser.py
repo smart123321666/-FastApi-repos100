@@ -1,16 +1,11 @@
 import os
-
 import psycopg2
 import requests
 from dotenv import load_dotenv
+import schedule
+import time
 
 load_dotenv()
-
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_DATABASE = os.getenv('DB_NAME')
 
 URL_API = os.getenv('URL_API')
 
@@ -24,11 +19,11 @@ def get_data():
 def save_data(data):
     try:
         conn = psycopg2.connect(
-            host=DB_HOST,
-            port=DB_PORT,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            database=DB_DATABASE,
+            host=os.getenv('DB_HOST'),
+            port=os.getenv('DB_PORT'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            database=os.getenv('DB_NAME'),
         )
         cur = conn.cursor()
 
@@ -52,8 +47,20 @@ def save_data(data):
 
         conn.commit()
     except (Exception, psycopg2.Error) as error:
-        print("Ошибка при работе с PostgreSQL", error)
+        print("Error while working with PostgreSQL", error)
     finally:
         if conn:
             cur.close()
             conn.close()
+
+
+def job():
+    data = get_data()
+    save_data(data)
+
+
+schedule.every().hour.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
