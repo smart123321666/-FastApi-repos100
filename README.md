@@ -3,19 +3,18 @@
 Это приложение FastAPI предоставляет конечные точки для получения информации о репозиториях и их активности из базы данных PostgreSQL.
 
 ## Сборка и запуск контейнера
-1. Клонируйте репозиторий:
-git clone https://github.com/your/repository.git
+1. Установите Docker с официального сайта: [ссылка](https://www.docker.com/get-started)
+2. Клонируйте репозиторий:
+git clone https://github.com/smart123321666/FastApi-repos100.git
 
-2. Перейдите в папку проекта:
+3. Перейдите в папку проекта:
 cd repository
 
-3. Создайте или отредактируйте файл `Dockerfile` для сборки образа Docker.
-
 4. Выполните сборку образа с помощью команды:
-docker build -t myapp .
+docker build . -t myapp:latest
 
 5. Запустите контейнер на основе созданного образа:
-docker run -p 8000:8000 myapp
+docker run -d -p 8000:8000 myapp
 
 ## Установка
 1. Создайте виртуальное окружение для проекта, используя venv (встроенный модуль Python):
@@ -29,12 +28,16 @@ docker run -p 8000:8000 myapp
     pip install -r requirements.txt
 
 4. Создать базу данных и записать базовые значения.
+    в файле переменных окружения должны быть указаны значения
+    DB_HOST=*
+    DB_USER=*
+    DB_PORT=*
+    DB_PASSWORD=*
+    DB_NAME=*
     python sql.py
 
-
-1. Установите Docker с официального сайта: [ссылка](https://www.docker.com/get-started)
-2. Проверьте успешность установки, запустив команду:
-
+5. Запустить проект.
+    uvicorn main:app --reload
 
 ### Получить Топ 100 Репозиториев
 
